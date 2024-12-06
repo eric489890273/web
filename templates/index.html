@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETF 資訊</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 水平置中 */
+            margin: 0; /* 移除默認的邊距 */
+            padding: 20px; /* 增加一些內邊距使內容不會緊貼視窗 */
+        }
+        div {
+            text-align: center; /* 將按鈕和其他內容在div內水平置中 */
+        }
+        button {
+            font-size: 24px; /* 調整文字大小 */
+            font-weight: bold; /* 設置字體為粗體 */
+            padding: 15px 30px; /* 調整內邊距 */
+            border-radius: 8px; /* 調整圓角 */
+            border: none; /* 移除邊框 */
+            background-color: #007BFF; /* 背景顏色 */
+            color: white; /* 文字顏色 */
+            cursor: pointer; /* 指標顯示為手型 */
+            transition: background-color 0.3s ease /* 平滑顏色過渡 */
+        }
+        button:hover {
+            background-color: #0056b3; /* 滑鼠懸停時改變背景顏色 */
+        }
+        .spacer {
+            margin-top: 80px; /* 調整空行的高度 */
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px; /* 設定title標籤的字體規格 */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>ETF 每日資訊</h1>
+        <!-- 建立抓取資料按鈕 -->
+        <form action="/run_script" method="post">
+            <button type="submit">抓取資料</button>
+        </form>
+        <div class="spacer"></div>
+        <h2 class="title">資料清單</h2>
+        <!-- 建立前往成交量頁面按鈕 -->
+        <form action="/to_volume" method="post">
+            <button type="submit">成交量</button>
+        </form>
+    </div>
+</body>
+</html>

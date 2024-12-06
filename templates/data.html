@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETF 成交量排行</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 水平置中 */
+            margin: 0; /* 移除默認的邊距 */
+            padding: 20px; /* 增加一些內邊距使內容不會緊貼視窗 */
+        }
+        div {
+            text-align: center; /* 將按鈕和其他內容在div內水平置中 */
+        }
+        button {
+            font-size: 24px; /* 調整文字大小 */
+            font-weight: bold; /* 設置字體為粗體 */
+            padding: 15px 30px; /* 調整內邊距 */
+            border-radius: 8px; /* 調整圓角 */
+            border: none; /* 移除邊框 */
+            background-color: #007BFF; /* 背景顏色 */
+            color: white; /* 文字顏色 */
+            cursor: pointer; /* 指標顯示為手型 */
+            transition: background-color 0.3s ease /* 平滑顏色過渡 */
+        }
+        button:hover {
+            background-color: #0056b3; /* 滑鼠懸停時改變背景顏色 */
+        }
+        .spacer {
+            margin-top: 80px; /* 調整空行的高度 */
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px; /* 設定title標籤的字體規格 */
+        }
+        label{
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px; /* 設定label的字體規格 */
+        }
+        table {
+            width: 100%; /* 使表格寬度填滿可用空間 */
+            border-collapse: separate; /* 保持單元格之間的間隙以實現圓角效果 */
+            border-spacing: 0; /* 消除單元格之間的間距 */
+            margin-bottom: 20px; /* 添加一些底部間距 */
+            border: 1px solid #dddddd; /* 表格外框邊框顏色 */
+            border-radius: 12px; /* 表格外框圓角 */
+            overflow: hidden; /* 確保內容不超出圓角範圍 */
+        }
+        th, td {
+            border: 1px solid #dddddd; /* 表格單元格邊框顏色 */
+            text-align: center; /* 表格內容置中 */
+            padding: 12px; /* 表格內邊距 */
+            font-family:Microsoft JhengHei; /* 表格內字體 */
+        }
+
+        th {
+            background-color: #007BFF; /* 表頭背景顏色 */
+            color: white; /* 表頭文字顏色 */
+            font-weight: bold; /* 表頭字體加粗 */
+            font-size: 22px; /* 表頭內容字體大小 */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* 奇數行背景顏色 */
+        }
+
+        tr:hover {
+            background-color: #ddd; /* 滑鼠懸停時的行背景顏色 */
+        }
+
+        td {
+            font-size: 18px; /* 表格內容字體大小 */
+            color: #333; /* 表格內容文字顏色 */
+            font-weight: bold; /* 表頭字體加粗 */
+        }
+        select {
+            font-size: 18px; /* 調整字體大小 */
+            padding: 10px 15px; /* 調整內邊距 */
+            border-radius: 8px; /* 調整圓角 */
+            border: 1px solid #dddddd; /* 边框顏色 */
+            background-color: #ffffff; /* 背景顏色 */
+            color: #333333; /* 文字顏色 */
+            appearance: none; /* 移除原生下拉箭頭 */
+            cursor: pointer; /* 指標顯示為手型 */
+            outline: none; /* 去掉焦點邊框 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 添加輕微陰影 */
+            width: 200px; /* 設定寬度 */
+            transition: border-color 0.3s ease; /* 平滑顏色過渡 */
+        }
+        select:hover {
+            border-color: #007BFF; /* 懸停時邊框顏色 */
+        }
+        select:focus {
+            border-color: #0056b3; /* 焦點時邊框顏色 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 焦點時陰影 */
+        }
+        select::-ms-expand {
+            display: none; /* 移除IE和Edge的箭頭 */
+        }
+        select::-webkit-select-arrow {
+            display: none; /* 隱藏原生下拉箭頭 */
+        }
+        .select-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .select-wrapper::after {
+            content: '▼'; /* 使用 Unicode 字符作為箭頭 */
+            font-size: 18px; /* 調整箭頭字體大小 */
+            color: #333333; /* 箭頭顏色 */
+            position: absolute;
+            right: 10px; /* 位置調整 */
+            top: 50%;
+            transform: translateY(-50%); /* 垂直置中 */
+            pointer-events: none; /* 讓箭頭不影響點擊 */
+        }
+        input[type="submit"] {
+            font-size: 18px; /* 調整文字大小 */
+            font-weight: bold; /* 設置字體為粗體 */
+            padding: 10px 20px; /* 調整內邊距 */
+            border-radius: 8px; /* 調整圓角 */
+            border: 1px solid #007BFF; /* 按鈕邊框顏色 */
+            background-color: #007BFF; /* 背景顏色 */
+            color: white; /* 文字顏色 */
+            cursor: pointer; /* 指標顯示為手型 */
+            outline: none; /* 去掉焦點邊框 */
+            transition: background-color 0.3s ease, border-color 0.3s ease; /* 平滑顏色過渡 */
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* 懸停時背景顏色 */
+            border-color: #0056b3; /* 懸停時邊框顏色 */
+        }
+        input[type="submit"]:focus {
+            background-color: #004494; /* 焦點時背景顏色 */
+            border-color: #004494; /* 焦點時邊框顏色 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* 焦點時陰影 */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>ETF 每日成交量排行</h1>
+        <!-- 創建一個下拉式選單，選項從資料庫裡抓資料表名 -->
+        <form action="/data" method="post">
+            <label for="tables">請選擇日期：</label>
+            <select name="tables" id="tables">
+                {% for dates in dates %}
+                <option value="{{dates}}">{{dates}}</option>
+                {% endfor %}
+            </select>
+            <!-- 送出選擇 -->
+            <input type="submit" value="查詢">
+        </form>
+        <br>
+        <!-- 建立返回主頁按鈕 -->
+        <form action="/back" method="post">
+            <button type="submit">返回</button>
+        </form>
+        <br>
+        <!-- 用從資料表中提取的資料建立表格 -->
+        <h2 class="title">ETF排行 日期:{{table_name}}</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                    <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    </div>
+</body>
+</html>
