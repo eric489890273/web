@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETF 資訊</title>
     <style>
+        /* 右上角的登入按鈕 */
+        .login-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+        .login-button:hover {
+            background-color: #45a049;
+        }
+        /* 顯示帳號名稱樣式 */
+        .username-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .username-button:hover {
+            background-color: #0056b3;
+        }
         body {
             display: flex;
             justify-content: center; /* 水平置中 */
@@ -41,6 +73,18 @@
 <body>
     <div>
         <h1>ETF 每日資訊</h1>
+    <!-- 檢查用戶是否已登入 -->
+    {% if username %}
+        <!-- 顯示用戶名並提供登出選項 -->
+        <a href="{{ url_for('logout') }}">
+            <button class="username-button">{{ username }} (登出)</button>
+        </a>
+    {% else %}
+        <!-- 如果未登入，顯示登入按鈕 -->
+        <a href="{{ url_for('login') }}">
+            <button class="login-button">登入</button>
+        </a>
+    {% endif %}
         <!-- 建立抓取資料按鈕 -->
         <form action="/run_script" method="post">
             <button type="submit">抓取資料</button>

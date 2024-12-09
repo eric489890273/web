@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* 設置字體 */
+            background-color: #f4f7fc; /* 背景顏色 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* 水平置中 */
+            align-items: center; /* 垂直置中 */
+            height: 100vh; /* 使 body 高度佔滿整個視窗 */
+        }
+
+        .container {
+            background-color: white; /* 背景顏色 */
+            border-radius: 10px; /* 圓角 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 輕微陰影效果 */
+            padding: 40px;
+            width: 400px; /* 設定容器寬度 */
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            color: #333; /* 標題文字顏色 */
+            margin-bottom: 20px; /* 標題下方間距 */
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #333; /* 文字顏色 */
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%; /* 讓輸入框寬度佔滿整個容器 */
+            padding: 12px;
+            margin: 10px 0 20px 0; /* 輸入框的上下間距 */
+            border: 1px solid #ddd; /* 邊框顏色 */
+            border-radius: 5px; /* 圓角 */
+            box-sizing: border-box; /* 包含內邊距和邊框在內的總寬度 */
+        }
+
+        button {
+            width: 100%;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .spacer {
+            margin-top: 20px; /* 頁面底部的間距 */
+            text-align: center;
+        }
+
+        .spacer a {
+            color: #007BFF; /* 註冊鏈接顏色 */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .spacer a:hover {
+            text-decoration: underline;
+        }
+
+        .messages {
+            color: #f44336; /* 錯誤消息顏色 */
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">註冊頁面</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="messages">
+                    <ul>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label for="username">帳號</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">密碼</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">確認密碼</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <button type="submit">註冊</button>
+        </form>
+
+        <div class="spacer">
+            <a href="{{ url_for('login') }}">已有帳號？點此登入</a>
+        </div>
+    </div>
+</body>
+</html>
